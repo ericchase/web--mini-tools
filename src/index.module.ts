@@ -25,7 +25,6 @@ await Async_WebPlatform_DOM_ReadyState_Callback({
     timestamp_input.defaultValue = `${Math.trunc(Date.now() / 1000)}`;
     processTimestamp();
     timestamp_form.addEventListener('submit', (event) => {
-      console.log('submit');
       event.preventDefault();
       processTimestamp();
     });
@@ -61,7 +60,6 @@ function trimEmEnd(text: string, ...chars: string[]) {
 function processTimestamp() {
   try {
     const date = new Date(Number.parseInt(timestamp_input.value.trim(), 10) * 1000);
-    console.log(date);
     const html = parseHTML(`
       <div>the timestamp must be in seconds:</div>
       <div><b>GMT</b>            <span>${formatUTCDate(date)}</span></div>
@@ -74,7 +72,7 @@ function processTimestamp() {
           try {
             await navigator.clipboard.writeText(span.textContent);
           } catch (error) {
-            console.error(error);
+            Core_Console_Error(error);
           }
         };
       }
