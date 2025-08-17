@@ -22,7 +22,7 @@ await Async_WebPlatform_DOM_ReadyState_Callback({
     createPxEmTable();
     pxem_input.oninput = () => createPxEmTable();
 
-    timestamp_input.defaultValue = `${Math.trunc(Date.now() / 1000)}`;
+    timestamp_input.defaultValue = `${Math.trunc(Date.now())}`;
     processTimestamp();
     timestamp_form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -59,9 +59,9 @@ function trimEmEnd(text: string, ...chars: string[]) {
 
 function processTimestamp() {
   try {
-    const date = new Date(Number.parseInt(timestamp_input.value.trim(), 10) * 1000);
+    const date = new Date(Number.parseInt(timestamp_input.value.trim(), 10));
     const html = parseHTML(`
-      <div>the timestamp must be in seconds:</div>
+      <div>the timestamp must be in milliseconds:</div>
       <div><b>GMT</b>            <span>${formatUTCDate(date)}</span></div>
       <div><b>Your time zone</b> <span>${formatDate(date)}</span></div>
     `).body.children;
