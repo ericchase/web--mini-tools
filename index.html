@@ -1,74 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tools</title>
-    <link rel="stylesheet" href="./normalize.css" />
-    <style>
-      :root {
-        font-size: 1rem;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-      body {
-        margin: 1em;
-      }
-      #px-to-em {
-        margin-inline-start: 1em;
-      }
-      .table {
-        font-family: monospace;
-      }
-    </style>
+    <!-- redirect to out folder for github pages -->
+    <meta http-equiv="Refresh" content="0; URL=./out/" />
   </head>
-  <body>
-    <h1>px to em</h1>
-    <div id="px-to-em">
-      <label for="px"
-        ><input name="px" type="number" value="16" style="inline-size: 3em" />
-        px</label
-      >
-      <pre class="table"></pre>
-      <hr />
-      <a href="./keylogger">Keylogger</a>
-    </div>
-    <script>
-      const parser = new DOMParser();
-      function parse(html) {
-        return parser.parseFromString(html).body.childNodes;
-      }
-      const inputPx = document.querySelector('[name="px"]');
-      const tablePx = document.querySelector("#px-to-em > .table");
-      inputPx.addEventListener("input", recalculatePxToEm);
-      function recalculatePxToEm() {
-        const pxlen = Math.max(2, inputPx.value.length);
-        const newRows = (function () {
-          const divs = [];
-          const px = Number.parseInt(inputPx.value);
-          for (let n = 1; n <= px; ++n) {
-            const pxString = `${n}`.padStart(pxlen, " ");
-            const emString = trimEnd((n / px).toFixed(5), "0", ".");
-            const div = document.createElement("div");
-            div.innerText = `${pxString}   ${emString}`;
-            divs.push(div);
-          }
-          while (tablePx.childElementCount < divs.length) {
-            tablePx.appendChild(document.createElement("div"));
-          }
-          return divs;
-        })();
-        tablePx.replaceChildren(
-          `${"px".padStart(pxlen, " ")}   em`,
-          ...newRows
-        );
-      }
-      recalculatePxToEm();
-      function trimEnd(str, ...chars) {
-        let i = str.length;
-        while (chars.includes(str[i - 1])) --i;
-        return str.slice(0, i);
-      }
-    </script>
-  </body>
 </html>
